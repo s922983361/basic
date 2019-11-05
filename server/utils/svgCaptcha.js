@@ -6,8 +6,8 @@ module.exports = async () => {
         fontSize: 50,
         ignoreChars: '0oO1ilI',//排除這些字
         width: 100,
-        height: 40,
-        background: '#cc9966'
+        height: 50,
+        background: '#91f793'
     })    
     return captcha
 }
