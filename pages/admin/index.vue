@@ -172,16 +172,18 @@
                 })                
                 return validateRuler
             },
-            handleSubmit () {
-                this.validateData().then(errors => {
+            handleSubmit () {                
+                this.validateData().then(errors => {                    
                     if(errors) {
                         errors.forEach(error => {
-                            Notification({
-                                title: error.field,
-                                message: error.message,
-                                type: 'warning',
-                                customClass: 'bg-yellow-200'
-                            })
+                            setTimeout(() => {
+                                Notification({
+                                    title: error.field,
+                                    message: error.message,
+                                    type: 'warning',
+                                    customClass: 'bg-yellow-200'
+                                })
+                            }, 500)                           
                         })
                         return
                     }
