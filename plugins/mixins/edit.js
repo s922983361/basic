@@ -1,39 +1,33 @@
-/**
- * @desc common notify function mixin use element-ui
- */
-import { Notification } from 'element-ui'
 export default {
     methods: {
-        /**
-         * 
-         * @param {*} id 
-         * @param {*} moduleName 
-         * @param {*} field 
-         */
-        async getSelectList(id, moduleName, field) { 
-            //find the obj you want to set value in 
-            const obj = this.formModels.find((o)=>{
-                return o.prop == id
-            })               
-            try {                    
-                // get selectList 
-                const { data } = await this.$axios.$get(`admin/getSelectList/${moduleName}`)
-                if(!this.$_.isEmpty(data)) {
-                    //add select obj key in 
-                    data.forEach(item => {
-                        item['value'] = item._id
-                        item['label'] = item[field]
-                    }) 
-                    obj.options = data 
+        async save(editData) {
+            let res = {}
+            try { 
+                //路由是否帶id-=>修改 不帶id=>新增
+                if(!this.$_.isEmpty(this.$route.params.id)) {
+                    res = await this.$axios.$put(`admin/rest/${this.modelName}/${this.$route.params.id}`, editData)                        
+                } else {
+                    res = await this.$axios.$post(`admin/rest/${this.modelName}`, editData)                        
+                }
+                //Server ERROR 
+                if(res.statusCode === 20500 || res.statusCode === 23500) {
+                    await this.notifyFunc(res, 'error', 'bg-red-200')
+                    return
+                }
+                //Success 
+                if(res.statusCode === 20200 || res.statusCode === 23200) {                        
+                    await this.notifyFunc(res, 'success', 'bg-green-200')
+                    this.$router.push(`/admin/${this.modelName}`)
                 }
             }
-            catch(err) {                    
+            catch(err) { 
+                //Browser ERROR                   
                 this.$message({                        
-                    message: '發生不明的錯誤,請聯絡管理員!!',
+                    message: '瀏覽器不明錯誤,請重新操作!!',
                     type: 'error',
                     customClass: 'bg-red-200'
                 })
             }
-        }
-    }
+        },
+    },
 }

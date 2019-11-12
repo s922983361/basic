@@ -92,20 +92,26 @@ app.use(RateLimit.middleware(CONFIG.limiter));
 app.use(helmet())
 app.use(helmet.hidePoweredBy({ setTo: 'PHP 7.0.15' }))//fake X-Powered-By
 //app.use(helmet.contentSecurityPolicy(CONFIG.CSP))//CSP module
-//set passport
+/** set passport*/
 app.use(passport.initialize());
 app.use(passport.session());
 require('./utils/passport')(passport);
-//set koa-router
+/** set koa-router*/
 app.use(router.routes()).use(router.allowedMethods())
-// set G object in global variable 
+/** set G object in global variable */ 
 router.use(varGlobal())
 
-/** API */
-router.use('/api/common', require('./routes/common'))// common includ [svg-captcha api]
-router.use('/api/admin/managers', require('./routes/admin/managers'))// managers api
+/** common API */
 router.use('/api/admin/rest/:resource', passport.authenticate('jwt', { session: false }), modelName(), require('./routes/admin'))//CRUD通用接口
 router.use('/api/admin/getSelectList/:resource', passport.authenticate('jwt', { session: false }), modelName(), require('./routes/admin/getSelectList'))//取得跨集合 關聯數據通用接口
+
+/** public API */
+router.use('/api/common', require('./routes/common'))// common includ [svg-captcha api]
+router.use('/api/admin/managers', require('./routes/admin/managers'))// managers api
+
+/** private API */
+router.use('/api/admin/brands', passport.authenticate('jwt', { session: false }), require('./routes/admin/brands'))// brands api
+
 
 
 //upload image接口 

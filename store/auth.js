@@ -2,6 +2,8 @@ import { getToken, setToken, removeToken } from '@/plugins/util/token'
 
 export const state = () => ({
     token: getToken(),
+    id: '',
+    role_id: '',
     username: '',
     avatar: '',
     is_super:'',
@@ -13,6 +15,12 @@ export const mutations = {
     
     SET_TOKEN(state, token) {
         state.token = token
+    },
+    SET_ID(state, id) {
+        state.id = id
+    },
+    SET_ROLE_ID(state, role_id) {
+        state.role_id = role_id
     },
     SET_NAME(state, name) {
         state.username = name
@@ -43,6 +51,8 @@ export const actions = {
                 setToken(res.token)
                 commit('SET_LOGGEIN')
                 //set user detail Data
+                commit('SET_ID', res.id)
+                commit('SET_ROLE_ID', res.role_id)
                 commit('SET_NAME', res.name)
                 commit('SET_AVATAR', res.avatar)
                 commit('SET_ISSUPER', res.is_super)

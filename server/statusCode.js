@@ -12,15 +12,24 @@ const _MSG = {
 
     12400: '12400 Captcha Is Incorrect!',
 
-    // 13200: '13200 Success To ADD RoleAccesses !!',
-    // 13500: '13500 Server ERROR !!',
-    // 14500: '14500 Server ERROR !!',
+    13200: '13200 Add Brand in Database Success!!',
+    13204: '13204 This "Brand" is Exsisted!!',
+    13500: 'Fail to Add Brand in Database, Server ERROR',
+
+    14500: 'Fail to Fetch Brands in Database, Server ERROR',
+
+    15200: 'Delete Brands Success',
+    15500: 'Fail to Delete Brands in Database, Server ERROR',
+
+    16200: 'Update Brands Success',
+    16500: 'Fail to Update Brands in Database, Server ERROR',
+    
 
     20200: '20200 Store Data in Database Success!!',
     20500: '20500 Fail to Store Data, Server ERROR !!',
     21500: '21500 Fail to Fetch Data, Server ERROR !!',
     22500: '22500 Fail to Fetch One Data, Server ERROR !!',
-    23200: '23200 Update Data in Database Success!!',
+    23200: '23200 Update Data Success!!',
     23500: '23500 Fail to Update Data, Server ERROR !!',
     24200: '24200 Delete Data in Database Success!!',
     24500: '24500 Fail to Delete Data, Server ERROR !!',
@@ -39,9 +48,17 @@ const _TITLE = {
 
     12400: '驗證碼錯誤!',
 
-    // 13200: '角色權限添加成功!!',
-    // 13500: '服務器發生錯誤,請聯絡管理人員',
-    // 14500: '服務器發生錯誤,請聯絡管理人員',
+    13200: '品牌添加成功!!',
+    13204: '該品牌名稱已經存在!!',
+    13500: '品牌添加失敗,服務器發生錯誤,請聯絡管理人員', 
+    
+    14500: '獲取品牌數據失敗,服務器發生錯誤,請聯絡管理人員',
+
+    15200: '該品牌已成功刪除',
+    15500: '刪除品牌數據失敗,服務器發生錯誤,請聯絡管理人員',
+
+    16200: '該品牌已成功更新',
+    16500: '更新品牌數據失敗,服務器發生錯誤,請聯絡管理人員',
 
     20200: '數據添加成功',
     20500: '數據添加失敗,服務器發生錯誤,請聯絡管理人員',
@@ -67,12 +84,19 @@ module.exports = {
         LOGIN_SEVER_ERROR : 11500,        
         /** 12000 CAPTCHA API**/
         CAPTCHA_ERROR: 12400,
-        /** 13000 ROLEACCESSES API **/
-        // ROLEACCESSES_ADD_SUCCESS: 13200,
-        // ROLEACCESSES_CRUD_ADD_ERROR: 13500,
-        //ACCESSES_GETMODULELIST_ERROR: 13500,
-        /** 14000 MANAGERS API */
-        //MANAGERS_GETMODULELIST_ERROR: 14500,
+
+        /** 13000  ADD_BRAND API **/
+        ADD_BRAND_SUCCESS: 13200,
+        ADD_BRAND_IS_EXSISTE: 13204,
+        ADD_BRAND_ERROR: 13500,
+        /** 14000  BRAND_FETCH API **/
+        BRANDS_FETCH_ERROR: 14500,
+        /** 15000  BRAND_DELETE API **/
+        BRAND_DELETE_SUCCESS: 15200,
+        BRAND_DELETE_ERROR: 15500,
+        /** 16000  BRAND_UPDATE API **/
+        BRAND_UPDATE_SUCCESS: 16200,
+        BRAND_UPDATE_ERROR: 16500,
 
         /** 20000 COMMOM_CRUD **/
         COMMOM_CRUD_ADD_SUCCESS: 20200,

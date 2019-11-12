@@ -1,71 +1,72 @@
 <template>
     <el-menu
-        default-active="2"
+        default-active="/admin/managers"
+        :router="true"
+        :unique-opened="true"
         class="el-menu-vertical-demo"
-        background-color='#e2e8f0'
-        text-color='#000'
+        
+        background-color='#2d3748'
+        text-color='#e2e8f0'
+        active-text-color="#f6ad55"
         >
-        <el-submenu index="1">
+        <el-submenu index="1" v-if="$store.state.auth.is_super">
             <template slot="title">
-                <i class="el-icon-eleme"></i>
+                <i class="el-icon-eleme" style="color:#e2e8f0"></i>
                 <span>超級管理員</span>
             </template>
             <el-menu-item-group>
-                <template slot="title">管理員功能模塊</template>
-                <nuxt-link to="/admin/managers">
-                    <el-menu-item index="1-3">                
-                        <i class="el-icon-tickets"></i>
-                        <span slot="title">管理員資訊</span>                                
-                    </el-menu-item>
-                </nuxt-link> 
+                <template slot="title">管理員功能模塊</template> 
 
-                <nuxt-link to="/admin/roles">
-                    <el-menu-item index="1-5">                
-                        <i class="el-icon-user"></i>
-                        <span slot="title">管理員角色</span>                                
-                    </el-menu-item>
-                </nuxt-link>
+                <el-menu-item index="/admin/managers">                
+                    <i class="el-icon-tickets"></i>
+                    <span slot="title">管理員資訊</span>                                
+                </el-menu-item>            
+                <el-menu-item index="/admin/roles">                
+                    <i class="el-icon-user"></i>
+                    <span slot="title">管理員角色</span>                                
+                </el-menu-item>
 
-                <nuxt-link to="/admin/accesses">
-                    <el-menu-item index="1-4">                
-                        <i class="el-icon-coordinate"></i>
-                        <span slot="title">管理員權限</span>                                
-                    </el-menu-item>
-                </nuxt-link>
+                <el-menu-item index="/admin/accesses">                
+                    <i class="el-icon-coordinate"></i>
+                    <span slot="title">管理員權限</span>                                
+                </el-menu-item>
+
             </el-menu-item-group>
 
             <el-menu-item-group>
                 <template slot="title">主功能模塊</template>
-                <nuxt-link to="/admin/categories">
-                    <el-menu-item index="1-2">                
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">分類列表</span>
-                    </el-menu-item>
-                </nuxt-link>
+                
+                <el-menu-item index="/admin/categories">                
+                    <i class="el-icon-menu"></i>
+                    <span slot="title">分類列表</span>
+                </el-menu-item>
 
-                <nuxt-link to="/admin/examples">
-                    <el-menu-item index="1-1">                
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">測試用範例</span>
-                    </el-menu-item>
-                </nuxt-link>
+                <el-menu-item index="/admin/examples">                
+                    <i class="el-icon-menu"></i>
+                    <span slot="title">測試用範例</span>
+                </el-menu-item>
             </el-menu-item-group>
         </el-submenu>
+        <el-submenu index="2" v-if="$store.state.auth.is_super || $store.state.auth.role_id === '5db0f7ab7b9fe840f0b1f73b'">
+            <template slot="title">
+                <i class="el-icon-eleme" style="color:#e2e8f0"></i>
+                <span>廠商</span>
+            </template>
+            <el-menu-item-group>
+                <template slot="title">商品功能模塊</template> 
 
-        <!-- <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">商品管理</span>
-        </el-menu-item>
-
-        <el-menu-item index="3">
-            <i class="el-icon-menu"></i>
-            <span slot="title">廣告管理</span>
-        </el-menu-item>
-
-        <el-menu-item index="4">
-            <i class="el-icon-menu"></i>
-            <span slot="title">消息管理</span>
-        </el-menu-item> -->
+                <el-menu-item index="/admin/brands">                
+                    <i class="el-icon-tickets"></i>
+                    <span slot="title">建立品牌</span>                                
+                </el-menu-item> 
+            </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="3" v-if="$store.state.auth.is_super || $store.state.auth.role_id === '5db0f7b77b9fe840f0b1f73c'">
+            <template slot="title">
+                <i class="el-icon-eleme" style="color:#e2e8f0"></i>
+                <span>經銷商</span>
+            </template>
+        </el-submenu>        
     </el-menu>    
 </template>
 

@@ -84,6 +84,7 @@ router.post('/login', async (ctx) => {
 
     try {
         if(captchaMatch) {
+            //Use email to find use detail            
             const result = await Manager.find({email})
             const USER = result[0]
 
@@ -119,9 +120,11 @@ router.post('/login', async (ctx) => {
                             const result = await Access.find({'_id': id})
                             accessArray.push(result[0].url)
                         }
+                        obj['id'] = USER._id
                         obj['name'] = USER.name
                         obj['avatar'] = USER.avatar
                         obj['is_super'] = USER.is_super
+                        obj['role_id'] = USER.role_id
                         obj['access'] = accessArray
                     }
 

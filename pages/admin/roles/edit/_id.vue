@@ -4,18 +4,24 @@
             <h1 class="text-2xl font-bold text-black">{{ $route.params.id ? `編輯-${pageTitle}` : `新增-${pageTitle}`}}</h1>
         </header>
         <div class="w-full mt-10">
-            <normalEdit
+            <commonEdit
                 :modelName=modelName
                 :formModels=formModels
-            ></normalEdit>
+                @editData="save"
+            ></commonEdit>
         </div>
     </div>
 </template>
 
 <script>
-    import normalEdit from '@/components/admin/form/normalEdit'
+    import commonEdit from '@/components/admin/form/commonEdit'
+    import getList from '@/plugins/mixins/getList'
+    import edit from '@/plugins/mixins/edit'
+    import notify from '@/plugins/mixins/notify'
+
     export default {
         layout: 'admin',
+        mixins: [ getList, notify , edit ],
         data () {
             return {
                 pageTitle: '管理員角色',
@@ -68,12 +74,8 @@
                 ],
             };
         },
-        computed: {},        
-        methods: {
-            
-        },
         components: {
-            normalEdit
+            commonEdit
         },
     }
 

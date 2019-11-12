@@ -15,13 +15,16 @@ const ManagerSchema = new Schema({
         match:[/^([-_A-Za-z0-9\.]+)@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/, 'Value is not a valid email' ]
     },
     tel: {
-        type: Number
+        type: String
     },
     is_super: {
-        type: Number, default: 0//[0:not super,1:is super]
+        type: Boolean, default: false//是否為超級管理員
     },
     role_id:{
         type: Schema.Types.ObjectId, ref: 'Role' //與Role modele關聯
+    },
+    brand_id: {
+        type: [String], ref: 'Brand' //與Brand modele關聯, 可管理的品牌
     },
     password: {
         type: String,

@@ -9,6 +9,14 @@
             <template v-for=" item in formModels"> 
                 <template :slot="item.position">
                     <el-form-item
+                        v-if="item.type == 'hidden'"                        
+                        :prop="item.prop"
+                        :key="item.prop"                       
+                        >
+                        <el-input :type="item.type" :value="item.value"></el-input>
+                        
+                        </el-form-item>
+                    <el-form-item
                         v-if="item.type == 'input'"
                         :label=item.label 
                         :prop="item.prop"
@@ -27,7 +35,7 @@
                         :rules="item.rules"
                         >
                         <el-input :type="item.type" v-model="model[item.prop]" :placeholder="item.placeholder"></el-input>
-                        
+
                         </el-form-item>
                     <el-form-item
                         v-if="item.type == 'select'"
@@ -90,20 +98,29 @@
     import notify from '@/plugins/mixins/notify'
 
     export default {
-        mixins:[ notify ],
         props: {
             modelName: { type: String, default: '' },
             formModels: { type: Array, default: [] },
-
         },
+        mixins: [ notify ],
         data () {
             return {
                 model: {},                
             };
         },
-        computed: {},
+        computed: {            
+            // escapeHtml() {             
+            //     for (let key in this.model) {
+            //         if(this.$_.isString(this.model[key])){
+            //             // key = this.$_.escape(this.model[key])
+            //             this.model[key] = this.$_.escape(this.model[key]) 
+            //             console.log(this.model)                       
+            //         }                   
+            //     }                
+            // }
+        },
         mounted() {
-            //路由帶id就先取資料          
+            //_id.vue : To fetch Data first if ID is exsist after mounted 
             if(!this.$_.isEmpty(this.$route.params.id)) {
                 this.fetch(this.modelName, this.$route.params.id)
                 .then(data =>{
@@ -115,47 +132,27 @@
             } 
         },
         methods: {
+            //submit Form After validate Func
             async submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.save(this.model, this.modelName, this.$route.params.id)
+                        //pass Data to parent component
+                        this.$emit('editData', this.model);
                     } else {
+                        this.$notify({
+                            message: '尚有表單未完成填寫!!',
+                            type: 'error',
+                            customClass: 'bg-red-200'
+                        })
                         return false;
                     }
                 });
             },
+            //reset all input data in this component
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },
-            async save(dataModel, modelName, id) {
-                let res = {}
-                try {
-                    //路由是否帶id-=>修改 不帶id=>新增
-                    if(!this.$_.isEmpty(id)) {
-                        res = await this.$axios.$put(`admin/rest/${modelName}/${id}`, dataModel)                        
-                    } else {
-                        res = await this.$axios.$post(`admin/rest/${modelName}`, dataModel)                        
-                    }
-                    //Server ERROR 
-                    if(res.statusCode === 20500 || res.statusCode === 23500) {
-                        await this.notifyFunc(res, 'error', 'bg-red-200')
-                        return
-                    }
-                    //Success 
-                    if(res.statusCode === 20200 || res.statusCode === 23200) {                        
-                        await this.notifyFunc(res, 'success', 'bg-green-200')
-                        this.$router.push(`/admin/${modelName}`)
-                    }
-                }
-                catch(err) { 
-                    //Browser ERROR                   
-                    this.$message({                        
-                        message: '瀏覽器不明錯誤,請重新操作!!',
-                        type: 'error',
-                        customClass: 'bg-red-200'
-                    })
-                }
-            },
+            // fetch Data from modelName after mounted
             async fetch(modelName, id) { 
                 try {
                     const res = await this.$axios.$get(`admin/rest/${modelName}/${id}`)

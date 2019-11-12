@@ -29,7 +29,7 @@
         <ul class="nav-item-group-left inline-flex">             
             <li class="mr-2 pt-1">
                 <div class="text-sm text-white">{{ $store.state.auth.username }}</div>
-                <span class="text-sm text-white">{{ $store.state.auth.is_super == 1 ? '超級管理員': '一般人' }}<i class="el-icon-success text-green-500" v-if="$store.state.auth.loggedIn"></i></span> 
+                <span class="text-sm text-white">{{ $store.state.auth.is_super ? '超級管理員': '一般人' }}<i class="el-icon-success text-green-500" v-if="$store.state.auth.loggedIn"></i></span> 
             </li>
             <li class="nav-item">
                 <el-dropdown :hide-on-click="false">

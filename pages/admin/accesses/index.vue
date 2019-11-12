@@ -83,23 +83,8 @@
                 ],
             };
         },
-        computed: {}, 
-        methods: {},
         components: {
-            dataTable,
-            expandDom: {
-                props: {
-                    column: {
-                        required: true
-                    },
-                    row: {
-                        required: true
-                    }
-                },
-                render (h) {
-                return h('div', {}, ([this.column.render(this.row, this.column)]))
-                }
-            }
+            dataTable,            
         },
     }
 
