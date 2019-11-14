@@ -40,10 +40,14 @@
                     {                        
                         label: '品牌LOGO:',
                         prop: 'logoUrl',
-                        type: 'input',
-                        placeholder: '輸入品牌LOGO',
+                        type: 'file',
                         position: 'response-right',//['response-left', 'response-right', 'response-full']
-                        disabled: false,                        
+                        data: {
+                            uploadFile : 'brandLogo'
+                        },
+                        autoUpload: true,
+                        showFileList: false,
+                        multiple: false,
                     },
                 ],
             };

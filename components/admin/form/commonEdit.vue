@@ -9,16 +9,29 @@
             <template v-for=" item in formModels"> 
                 <template :slot="item.position">
                     <el-form-item
-                        v-if="item.type == 'hidden'"                        
+                        v-if="item.type == 'file'"
+                        :label="item.label"
                         :prop="item.prop"
-                        :key="item.prop"                       
+                        :key="item.prop"
                         >
-                        <el-input :type="item.type" :value="item.value"></el-input>
-                        
+                        <el-upload
+                            class="avatar-uploader"                            
+                            :action="`/api/admin/upload`"
+                            :data="item.data"
+                            :multiple="item.multiple"                        
+                            :show-file-list="item.showFileList"                            
+                            :auto-upload="item.autoUpload"
+                            :headers="getHeader"
+                            :on-success="afterUpload"
+                            accept="image/png, image/jpeg"
+                            >
+                            <img class="avatar" v-if="model[item.prop]" :src="model[item.prop]">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>                        
                         </el-form-item>
                     <el-form-item
                         v-if="item.type == 'input'"
-                        :label=item.label 
+                        :label="item.label" 
                         :prop="item.prop"
                         :key="item.prop"
                         :rules="item.rules"                        
@@ -28,7 +41,7 @@
                         </el-form-item>
                     <el-form-item
                         v-if="item.type == 'textarea'"
-                        :label=item.label 
+                        :label="item.label" 
                         :prop="item.prop"
                         :rows="item.rows"
                         :key="item.prop"
@@ -39,7 +52,7 @@
                         </el-form-item>
                     <el-form-item
                         v-if="item.type == 'select'"
-                        :label=item.label 
+                        :label="item.label" 
                         :prop="item.prop"
                         :key="item.prop"
                         :rules="item.rules"
@@ -58,7 +71,7 @@
                         </el-form-item>
                     <el-form-item
                         v-if="item.type == 'radio'"
-                        :label=item.label
+                        :label="item.label"
                         :prop="item.prop"
                         :key="item.prop"
                         :rules="item.rules"
@@ -108,7 +121,12 @@
                 model: {},                
             };
         },
-        computed: {            
+        computed: { 
+            getHeader() {
+                return {                    
+                    'Authorization': this.$store.state.auth.token
+                }
+            }          
             // escapeHtml() {             
             //     for (let key in this.model) {
             //         if(this.$_.isString(this.model[key])){
@@ -169,7 +187,15 @@
                         customClass: 'bg-red-200'
                     })
                 }
-            }
+            },
+            async afterUpload(res) {
+                //vue $set
+                this.$set(this.model, 'logoUrl', res.file.url)
+                //this.model.icon = res.file.url
+            },
+            // async beforeUpload() {
+
+            // }
         },
         components: {
             viewPage
@@ -178,5 +204,26 @@
 
 </script>
 <style scoped>
-
-</style>
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+}

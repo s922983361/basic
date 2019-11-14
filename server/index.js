@@ -112,10 +112,8 @@ router.use('/api/admin/managers', require('./routes/admin/managers'))// managers
 /** private API */
 router.use('/api/admin/brands', passport.authenticate('jwt', { session: false }), require('./routes/admin/brands'))// brands api
 
-
-
-//upload image接口 
-//router.use('/api/admin/upload', require('./routes/admin/upload'))
+//upload image API 
+router.use('/api/admin/upload', passport.authenticate('jwt', { session: false }), require('./routes/admin/upload'))
 //download DataList接口 
 //router.use('/api/admin/download', require('./routes/admin/download'))
 

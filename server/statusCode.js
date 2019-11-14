@@ -1,7 +1,7 @@
 
 const _MSG = {
-    10200 : '10200 Success To Register Manager !!',
-    10204 : '10204 This Email Exsit !!',
+    10200: '10200 Success To Register Manager !!',
+    10204: '10204 This Email Exsit !!',
     10500: '10500 Server ERROR !!',
 
     11200: '11200 Success To Login Manager !!',
@@ -14,15 +14,15 @@ const _MSG = {
 
     13200: '13200 Add Brand in Database Success!!',
     13204: '13204 This "Brand" is Exsisted!!',
-    13500: 'Fail to Add Brand in Database, Server ERROR',
+    13500: '13500 Fail to Add Brand in Database, Server ERROR',
 
-    14500: 'Fail to Fetch Brands in Database, Server ERROR',
+    14500: '14500 Fail to Fetch Brands in Database, Server ERROR',
 
-    15200: 'Delete Brands Success',
-    15500: 'Fail to Delete Brands in Database, Server ERROR',
+    15200: '15200 Delete Brands Success',
+    15500: '15500 Fail to Delete Brands in Database, Server ERROR',
 
-    16200: 'Update Brands Success',
-    16500: 'Fail to Update Brands in Database, Server ERROR',
+    16200: '16200 Update Brands Success',
+    16500: '16500 Fail to Update Brands in Database, Server ERROR',
     
 
     20200: '20200 Store Data in Database Success!!',
@@ -34,6 +34,9 @@ const _MSG = {
     24200: '24200 Delete Data in Database Success!!',
     24500: '24500 Fail to Delete Data, Server ERROR !!',
     25500: '25500 Fail to fetch SELECT Data, Server ERROR !!',
+
+    90200: '90200 Upload File Success!!',
+    90500: '90500 Fail to Upload File, Server ERROR !!',
 } 
 const _TITLE = {    
     10200 : '註冊成功!,請使用新帳號密碼登入!!',
@@ -69,6 +72,9 @@ const _TITLE = {
     24200: '數據刪除成功',
     24500: '數據刪除失敗,服務器發生錯誤,請聯絡管理人員',
     25500: '取得關聯數據失敗,服務器發生錯誤,請聯絡管理人員',
+
+    90200: '檔案上傳成功',
+    90500: '檔案上傳失敗服,務器發生錯誤,請聯絡管理人員',
 }
 module.exports = {
     _CODE:{
@@ -107,9 +113,11 @@ module.exports = {
         COMMOM_CRUD_UPDATE_ERROR: 23500,
         COMMOM_CRUD_DELETE_SUCCESS: 24200,
         COMMOM_CRUD_DELETE_ERROR: 24500,
-        COMMOM__GETSELECTLIST_ERROR: 25500
+        COMMOM__GETSELECTLIST_ERROR: 25500,
 
-
+         /** 90000 UPLOAD_FILE **/
+        UPLOAD_FILE_SUCCESS: 90200,
+        UPLOAD_FILE_ERROR: 90500,
     },
     CTXBODY (code) { 
         let obj    
