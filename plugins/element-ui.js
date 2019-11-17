@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Button, Input, Radio, RadioGroup, Pagination, Form, FormItem, Select, Option, Checkbox, Upload, CheckboxGroup, Dropdown, DropdownMenu, DropdownItem, Menu, Submenu, MenuItem, MenuItemGroup, Table, TableColumn, DatePicker, Tooltip, Tabs, Tag, Icon, Row, Col, Container, Header, Main, Aside, Footer, Divider, Loading, MessageBox,Message, Notification } from 'element-ui'
+import { Button, Input, Radio, RadioGroup, Pagination, Dialog, Form, FormItem, Select, Option, Checkbox, Upload, CheckboxGroup, Dropdown, DropdownMenu, DropdownItem, Menu, Submenu, MenuItem, MenuItemGroup, Table, TableColumn, DatePicker, Tooltip, Tabs, Tag, Icon, Row, Col, Container, Header, Main, Aside, Footer, Divider, Loading, MessageBox,Message, Notification } from 'element-ui'
 
 import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
@@ -13,8 +13,9 @@ locale.use(lang)
 Vue.use(Button)
 Vue.use(Input)
 Vue.use(Radio);
-Vue.use(RadioGroup);
+Vue.use(RadioGroup)
 Vue.use(Pagination)
+Vue.use(Dialog)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Select)

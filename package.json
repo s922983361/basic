@@ -17,6 +17,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
     "bcrypt": "^3.0.6",
+    "browser-image-compression": "^1.0.6",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
     "file-saver": "^2.0.2",

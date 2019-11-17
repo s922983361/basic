@@ -24,7 +24,22 @@
             return {
                 pageTitle: '品牌資訊',
                 modelName: 'brands', 
-                formModels: [
+                formModels: [                    
+                    {                        
+                        label: '上傳LOGO:',
+                        prop: 'logoUrl',
+                        type: 'file',
+                        action: '/api/admin/upload', //sever API
+                        listType: 'picture', //['text', 'picture', 'picture-card']
+                        position: 'response-full',//['response-left', 'response-right', 'response-full']
+                        data: {
+                            uploadFile : 'brandLogo'//custom pic dirName
+                        },
+                        autoUpload: true,
+                        showFileList: false,
+                        multiple: false,
+                        limit: 1, //Number: have to set value if 'multiple' is true
+                    },
                     {                        
                         label: '品牌名稱:',
                         prop: 'name',
@@ -36,18 +51,6 @@
                             { required: true, message: '品牌名稱必須填寫', trigger: 'blur' },
                             { max: 50, message: '太長(50個字)', trigger: 'blur' },
                         ]
-                    },
-                    {                        
-                        label: '品牌LOGO:',
-                        prop: 'logoUrl',
-                        type: 'file',
-                        position: 'response-right',//['response-left', 'response-right', 'response-full']
-                        data: {
-                            uploadFile : 'brandLogo'
-                        },
-                        autoUpload: true,
-                        showFileList: false,
-                        multiple: false,
                     },
                 ],
             };

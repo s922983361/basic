@@ -15,19 +15,27 @@
                         :key="item.prop"
                         >
                         <el-upload
-                            class="avatar-uploader"                            
-                            :action="`/api/admin/upload`"
+                            class="avatar-uploader"
+                            :list-type="item.listType"
+                            :action="item.action"
                             :data="item.data"
-                            :multiple="item.multiple"                        
-                            :show-file-list="item.showFileList"                            
+                            :multiple="item.multiple" 
+                            :limit="item.limit"                       
+                            :show-file-list="item.showFileList"
                             :auto-upload="item.autoUpload"
+
                             :headers="getHeader"
-                            :on-success="afterUpload"
-                            accept="image/png, image/jpeg"
+                            :before-upload="beforeUploadFile"
+                            :on-success="handleFileSuccess"
+                            accept="image/png, image/jpeg" 
                             >
+                            <!-- <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div> -->
+                            <div slot="tip" class="el-upload__tip">
+                                <p><span style="color:#409EFF;">* 點擊 + 上傳圖片</span> 只能上傳 jpg/png 圖片，且不超過500KB</p>                                
+                            </div>                            
                             <img class="avatar" v-if="model[item.prop]" :src="model[item.prop]">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>                        
+                            </el-upload>
                         </el-form-item>
                     <el-form-item
                         v-if="item.type == 'input'"
@@ -109,6 +117,8 @@
 <script>
     import viewPage from '@/components/admin/form/viewPage'
     import notify from '@/plugins/mixins/notify'
+    import { imageCompress } from '@/plugins/util/imageCompress'
+    import { showLoading, hideLoading } from '@/plugins/util/loading'
 
     export default {
         props: {
@@ -118,7 +128,7 @@
         mixins: [ notify ],
         data () {
             return {
-                model: {},                
+                model: {},              
             };
         },
         computed: { 
@@ -126,16 +136,7 @@
                 return {                    
                     'Authorization': this.$store.state.auth.token
                 }
-            }          
-            // escapeHtml() {             
-            //     for (let key in this.model) {
-            //         if(this.$_.isString(this.model[key])){
-            //             // key = this.$_.escape(this.model[key])
-            //             this.model[key] = this.$_.escape(this.model[key]) 
-            //             console.log(this.model)                       
-            //         }                   
-            //     }                
-            // }
+            },
         },
         mounted() {
             //_id.vue : To fetch Data first if ID is exsist after mounted 
@@ -187,15 +188,52 @@
                         customClass: 'bg-red-200'
                     })
                 }
-            },
-            async afterUpload(res) {
-                //vue $set
-                this.$set(this.model, 'logoUrl', res.file.url)
-                //this.model.icon = res.file.url
-            },
-            // async beforeUpload() {
+            },         
+            beforeUploadFile(file) { 
+                /**
+                 * @desc element-ui el-upload component hook
+                 * **Do not use async function important!!**
+                 * @param file is a promise & need to return after imgCpmpress for next step function 
+                 */
+                showLoading()
+                const isIMAGE = file.type === 'image/jpeg'||'image/png'
 
-            // }
+                if(!isIMAGE) {
+                    hideLoading()
+                    this.$notify({
+                        title: 'Info',
+                        type: 'warning',
+                        message: '只能是JPG 或 PNG 格式',
+                        customClass: 'bg-yellow-200'
+                    })                    
+                    return false
+                }
+                /**
+                * imageCompress(file, maxSizeMB, maxWidthOrHeight)
+                * @param {*} file a bold in promise 
+                * @param {*} maxSizeMB the sizeMB of file after cpmpressing (Number/mb default:0.1)
+                * @param {*} maxWidthOrHeight that will be resized maxWidthOrHeight (Number/px default:300) 
+                 */
+                return file = imageCompress(file)               
+            },
+            handleFileSuccess(res) {
+                /**
+                 * @desc element-ui el-upload component hook
+                 * **Do not use async function important!!**
+                 */
+                hideLoading()                
+                if(!this.$_.isEmpty(res)) {
+                    //Server ERROR 
+                    res.statusCode === 90500 && this.notifyFunc(res, 'error', 'bg-red-200')
+                    //Success 
+                    if(res.statusCode === 90200) {                        
+                        this.notifyFunc(res, 'success', 'bg-green-200')
+                         //vue $set
+                        this.$set(this.model, 'logoUrl', res.file.url)
+                        return 
+                    }
+                }              
+            },
         },
         components: {
             viewPage
@@ -205,7 +243,7 @@
 </script>
 <style scoped>
 .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
+    border: 1px dashed #000;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
@@ -217,13 +255,14 @@
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 108px;
+    height: 108px;
+    line-height: 108px;
     text-align: center;
 }
 .avatar {
-    width: 178px;
-    height: 178px;
+    width: 108px;
+    height: 108px;
     display: block;
 }
+</style>
