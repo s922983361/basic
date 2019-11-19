@@ -54,6 +54,7 @@
                         label: '品牌logo',
                         align: 'left',
                         width: 50,
+                        is_image: true //to show image                       
                     },
                     {
                         prop: 'status',
@@ -141,14 +142,20 @@
              * @param {*} row scope row data form Datatable component
              */
             async handleDel (row) {
-                this.$confirm(`是否刪除 "${row.name ? row.name : row.title }"?`, '提示', {
+
+                let baseUrl = 'http://localhost:3000'
+                let path = '/uploads/brandLogo/'
+                let str = baseUrl + path
+                let fileName = row.logoUrl.substring(str.length)
+
+                this.$confirm(`是否刪除 "${row.name ? row.name : row.title }"? 如果您的品牌已經建立過商品, 刪除此品牌將會一併刪除相關的所有商品, 確定要刪除?`, '提示', {
                     confirmButtonText: '確定',
                     cancelButtonText: '取消',
-                    type: 'warning'
+                    type: 'error'
                 })
                 .then( async () => {
                     try {
-                        const res = await this.$axios.$delete(`/admin/${this.modelName}/${row._id}/${this.$store.state.auth.id}`)
+                        const res = await this.$axios.$delete(`/admin/${this.modelName}/${row._id}/${this.$store.state.auth.id}/${fileName}`)
                         //Server ERROR 
                         res.statusCode === 15500 && await this.notifyFunc(res, 'error', 'bg-red-200')
                         //Success
@@ -184,7 +191,7 @@
             },
         },
         components: {
-            dataTable,            
+            dataTable, 
         },
     }
 

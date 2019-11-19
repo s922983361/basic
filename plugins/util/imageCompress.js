@@ -11,8 +11,8 @@ import { Notification } from 'element-ui'
 export const imageCompress = async (file , maxSizeMB = 0.1, maxWidthOrHeight = 300) => {
     //const imageFile = event.target.files[0];
     const imageFile = file
-    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`)    
+    // console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`)    
     var options = {
         maxSizeMB,
         maxWidthOrHeight,
@@ -21,8 +21,8 @@ export const imageCompress = async (file , maxSizeMB = 0.1, maxWidthOrHeight = 3
 
     try {
         const compressedFile = await imageCompression(imageFile, options);
-        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+        // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+        // console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
         return compressedFile
         //await uploadToServer(compressedFile); // write your own logic
     } catch (error) {

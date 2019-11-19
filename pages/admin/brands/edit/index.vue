@@ -38,7 +38,7 @@
                         autoUpload: true,
                         showFileList: false,
                         multiple: false,
-                        limit: 1, //Number: have to set value if 'multiple' is true
+                        limit: 1, //Number: have to set value if 'multiple' is true                        
                     },
                     {                        
                         label: '品牌名稱:',
@@ -58,6 +58,16 @@
         computed: {},
         methods: {
             async save(editData) {
+                //logoUrl is needed
+                if(this.$_.isEmpty(editData.logoUrl)){
+                    this.$notify({
+                        message: '品牌Logo 尚未上傳',
+                        type: 'error',
+                        customClass: 'bg-red-200'
+                    })
+                    return
+                }
+
                 let res = {}
                 editData.manager_id = this.$store.state.auth.id
                 try {                 

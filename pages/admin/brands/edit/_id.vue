@@ -8,6 +8,7 @@
                 :modelName=modelName
                 :formModels=formModels
                 @editData="save"
+                @getLogoUrl="getLogoUrl"
             ></commonEdit>
         </div>
     </div>
@@ -23,7 +24,8 @@
         data () {
             return {
                 pageTitle: '品牌資訊',
-                modelName: 'brands', 
+                modelName: 'brands',
+                FileName: '', //old image url
                 formModels: [                    
                     {                        
                         label: '上傳LOGO:',
@@ -52,16 +54,23 @@
                             { max: 50, message: '太長(50個字)', trigger: 'blur' },
                         ]
                     },
-                ],
+                ],                
             };
         },
-        computed: {},
+        computed: {},        
         methods: {
-            async save(editData) {
+            async getLogoUrl(logoUrl) {
+                let baseUrl = 'http://localhost:3000'
+                let path = '/uploads/brandLogo/'
+                let str = baseUrl + path
+                let fileName = logoUrl.substring(str.length)
+                this.FileName = fileName
+            },
+            async save(editData) { 
                 let res = {}
                 editData.manager_id = this.$store.state.auth.id
                 try {                 
-                    res = await this.$axios.$put(`admin/${this.modelName}/${this.$route.params.id}`, editData)  
+                    res = await this.$axios.$put(`admin/${this.modelName}/${this.$route.params.id}/${this.FileName}`, editData)  
                     //Server ERROR 
                     if(res.statusCode === 16500 || res.statusCode === 13204) {
                         await this.notifyFunc(res, 'error', 'bg-red-200')

@@ -31,7 +31,7 @@ router.post('/', upload.single('file'), async (ctx) => {
     !fs.existsSync(destPathDir) && fs.mkdirSync(destPathDir)
 
     try {        
-        //async move file        
+        //upload file will be seted in default folder '/static/uploads', after upload asunc moving file to custom folder       
         fs.rename(sourceFile, destPath, (err) => {
             if (err) throw err
         })

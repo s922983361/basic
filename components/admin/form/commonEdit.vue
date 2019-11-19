@@ -144,6 +144,8 @@
                 this.fetch(this.modelName, this.$route.params.id)
                 .then(data =>{
                     this.model = data
+                    //pass Data to parent component
+                    !this.$_.isEmpty(this.model.logoUrl) && this.$emit('getLogoUrl', this.model.logoUrl)                    
                 })
                 .catch( err =>{
                     this.$message.error('500 服務器錯誤!, 數據導入失敗!');

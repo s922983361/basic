@@ -65,7 +65,12 @@
                     >
                     <template slot-scope="scope">
                         <template v-if="!column.render">
-                            {{scope.row[column.prop]}}
+                            <template v-if="column.is_image">
+                                <img :src="scope.row[column.prop]" :alt="scope.row[column.label]" style="height:3rem">
+                            </template>
+                            <template v-else>
+                                {{scope.row[column.prop]}}
+                            </template>
                         </template>
                         <template v-else>
                             <expand-dom :column="column" :row="scope.row" :render="column.render"></expand-dom>
