@@ -35,12 +35,17 @@
 
             <el-menu-item-group>
                 <template slot="title">主功能模塊</template>
-                
-                <el-menu-item index="/admin/categories">                
-                    <i class="el-icon-menu"></i>
-                    <span slot="title">分類列表</span>
+
+                <el-menu-item index="/admin/goodsTypes">                
+                    <i class="el-icon-price-tag"></i>
+                    <span slot="title">商品類型</span>
                 </el-menu-item>
 
+                <el-menu-item index="/admin/goodsCates">                
+                    <i class="el-icon-discount"></i>
+                    <span slot="title">商品分類</span>
+                </el-menu-item>
+                
                 <el-menu-item index="/admin/examples">                
                     <i class="el-icon-menu"></i>
                     <span slot="title">測試用範例</span>

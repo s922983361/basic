@@ -101,14 +101,14 @@
     min-height: 90vh;
 }
 .main-sidebar {
-    position: fixed;
+    position: fixed;    
     top: 0;
     left: 0;
-    bottom: 0;
+    bottom: 0; 
 
     z-index: 1100;
-    height: 100vh;
-    overflow-y: hidden;
+    min-height: 100vh;
+    overflow-y: auto
 }
 .main-sidebar, .main-sidebar:before {
     transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;

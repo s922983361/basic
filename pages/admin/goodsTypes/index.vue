@@ -32,12 +32,11 @@
     export default {
         layout: 'admin',
         mixins: [table, notify],
-
         data () {
             return {
-                title:'管理員角色',
-                modelName: 'roles',//*注意:英文全小寫複數
-                addPushTo: 'roles',//新增的路由目標
+                title:'商品所屬類型列表',
+                modelName: 'goodsTypes',//*注意:英文全小寫複數
+                addPushTo: 'goodsTypes',
                 statusFilter: false,//是否需要狀態過濾
                 statusArray:[],//狀態的內容--狀態過濾使用,要依照status順序排列
                 timeFilter: true,//是否需要時間過濾
@@ -45,35 +44,29 @@
                 list: [],
                 columns: [                    
                     {
-                        prop: 'title',
-                        label: '角色名稱',
+                        prop: 'name',
+                        label: '類型名稱',
                         align: 'left',
-                        width: 50,                        
-                    },                   
+                        width: 100,                        
+                    },
                     {
-                        prop: 'status',
-                        label: '狀態',
-                        align: 'center',
-                        width:  50,
-                        render: (h, params) => {
-                            return h('el-tag', {
-                                props: {
-                                    type: params.row.status === 0 ? 'danger' : params.row.status === 1 ? 'info' : 'succcess'} // 组件的props(使用狀態碼控制顏色)
-                            }, params.row.status === 0 ? '啟用中' : params.row.status === 1 ? '停用中': '未知')//组件的props(使用狀態碼控制內容)
-                        }
-                    },                 
+                        prop: 'description',
+                        label: '類型描述',
+                        align: 'left',
+                        width: 200,                        
+                    },
                     {
                         prop: 'create_date',
                         label: '創建日期',
                         align: 'center',
                         width: 100,
                         sortable: true
-                    },    
+                    },   
                 ],
                 operates: {                    
                     list: [ 
                         {
-                            label: '權限',
+                            label: '屬性列表',
                             type: 'info',
                             icon: 'el-icon-setting',
                             plain: true,                            
@@ -102,13 +95,16 @@
                         }
                     ],                    
                 },
-            };
+            }
         },
-        computed: {},
+        created() {
+            this.fetch()
+        },
         methods: {
             //跳轉權限頁面
             async handleAuth (row) {
-                this.$router.push(`/admin/${this.modelName}/auth/${row._id}`)
+                //this.$router.push(`/admin/goodsTypeAttrs/${row._id}`)
+                this.$router.push(`/admin/goodsTypes/${row._id}`)
             }
         },
         components: {

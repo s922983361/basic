@@ -1,7 +1,7 @@
 <template>
     <viewPage>        
         <template slot="left-field">
-            <el-button type="primary" icon="el-icon-circle-plus-outline" size="medium" plain @click="$router.push(`/admin/${modelName}/edit`)">新增</el-button>
+            <el-button type="primary" icon="el-icon-circle-plus-outline" size="medium" plain @click="$router.push(`/admin/${addPushTo}/edit`)">新增</el-button>
         </template>
 
         <template slot="search-field">
@@ -138,7 +138,7 @@
         props:{
             list: { type: Array, default:[] },
             title: { type: String, default:'' },
-            modelName: { type: String, default:'' },
+            addPushTo: { type: String, default:'' },
             columns: { type: Array, default: [] },
             operates: { type: Object, default: {} },
             statusFilter: { type: Boolean, default: false },

@@ -2,12 +2,13 @@
     <div class="list w-full">
         <header class="text-center border-b-2 border-teal-300 py-4">
             <h1 class="text-2xl font-bold text-black">{{ title }}</h1>
+            <h3 class="text-2xl text-black">{{ $route.params.id }}</h3>
         </header>
         <div class="content p-4">
             <dataTable
                 :list="list"
                 :title="title"
-                :addPushTo="addPushTo"
+                :modelName="modelName"
                 :columns="columns"
                 :operates="operates"
                 :listLoading="listLoading"
@@ -30,63 +31,47 @@
     import notify from '@/plugins/mixins/notify'
 
     export default {
-        layout: 'admin',        
+        layout: 'admin',
         mixins: [table, notify],
-        
         data () {
             return {
-                title:'角色功能及權限列表',
-                modelName: 'accesses',
-                addPushTo: 'accesses',
+                title:'商品所屬類型列表',
+                modelName: 'goodsTypeAttrs',//*注意:英文全小寫複數
+                goodsType_id: this.$route.params.id,
                 statusFilter: false,//是否需要狀態過濾
                 statusArray:[],//狀態的內容--狀態過濾使用,要依照status順序排列
-                timeFilter: false,//是否需要時間過濾
+                timeFilter: true,//是否需要時間過濾
                 listLoading: false,                
                 list: [],
                 columns: [                    
                     {
-                        prop: 'module_name',
-                        label: '模組名稱',
+                        prop: 'name',
+                        label: '類型名稱',
                         align: 'left',
-                        width: 50,
-                    },                    
+                        width: 100,                        
+                    },
                     {
-                        prop: 'type',
-                        label: '節點',
+                        prop: 'description',
+                        label: '類型描述',
+                        align: 'left',
+                        width: 200,                        
+                    },
+                    {
+                        prop: 'create_date',
+                        label: '創建日期',
                         align: 'center',
-                        width: 50,
-                        render: (h, params) => {
-                            return h('el-tag', {
-                                props: {
-                                    type: params.row.type === 1 ? 'danger' : params.row.type === 2 ? 'info' : 'succcess'} // 组件的props(使用狀態碼控制顏色)
-                            }, params.row.type === 1 ? '頂級模組' : params.row.type === 2 ? '菜單列表': '操作功能')//组件的props(使用狀態碼控制內容)
-                        }
-                    },
-                    {
-                        prop: 'action_name',
-                        label: '操作',
-                        align: 'left',
-                        width: 50,
-                    },
-                    {
-                        prop: 'url',
-                        label: '操作URL',
-                        align: 'left',
                         width: 100,
-                    }, 
-                    {
-                        prop: 'sort',
-                        label: '排序',
-                        align: 'center',
-                        width: 50,
                         sortable: true
-                    },
+                    },   
                 ],
-            };
+            }
+        },
+        created() {
+            this.fetch()
         },
         components: {
-            dataTable,            
-        },
+            dataTable
+        }
     }
 
 </script>

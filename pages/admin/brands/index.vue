@@ -7,7 +7,7 @@
             <dataTable
                 :list="list"
                 :title="title"
-                :modelName="modelName"
+                :addPushTo="addPushTo"
                 :columns="columns"
                 :operates="operates"
                 :listLoading="listLoading"
@@ -36,6 +36,7 @@
             return {
                 title:'品牌列表',
                 modelName: 'brands',
+                addPushTo: 'brands',
                 manager_id: this.$store.state.auth.id,
                 statusFilter: false,//是否需要狀態過濾
                 statusArray:[],//狀態的內容--狀態過濾使用,要依照status順序排列

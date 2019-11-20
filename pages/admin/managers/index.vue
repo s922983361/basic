@@ -7,7 +7,7 @@
             <dataTable
                 :list="list"
                 :title="title"
-                :modelName="modelName"
+                :addPushTo="addPushTo"
                 :columns="columns"
                 :operates="operates"
                 :listLoading="listLoading"
@@ -36,6 +36,7 @@
             return {
                 title:'管理員列表',
                 modelName: 'managers',//*注意:英文全小寫複數
+                addPushTo: 'managers',//新增的路由目標
                 statusFilter: false,//是否需要狀態過濾
                 statusArray:[],//狀態的內容--狀態過濾使用,要依照status順序排列
                 timeFilter: true,//是否需要時間過濾
