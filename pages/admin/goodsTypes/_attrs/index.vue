@@ -69,6 +69,36 @@
         created() {
             this.fetch()
         },
+        methods: {
+        /**
+         * @custom this is custom fetch not equal fetch() in mixins table.js 
+         * @desc use $axios to fetch data from database & use $route.params.attrs filter data & total
+         * @param {*} pageIndex nunber default:1, table index page 
+         * @param {*} pageSize nunber default:20, the count of data in table list
+         */
+        async fetch(pageIndex = 1, pageSize = 20) {
+            try {
+                const res = await this.$axios.$get(`admin/rest/${this.modelName}/${pageIndex}/${pageSize}`)
+                //Server ERROR
+                res.statusCode === 21500 && await this.notifyFunc(res, 'error', 'bg-red-200') 
+                //Success
+                //get data match this.$route.params.attrs
+                const filterData = res.data.filter((item) => {
+                    return item.goodsType_id == this.$route.params.attrs
+                })
+                this.list = filterData
+                this.total = filterData.length
+            }
+            catch(err) {
+                 //Browser ERROR                   
+                this.$message({                        
+                    message: '瀏覽器不明錯誤,請重新操作!!',
+                    type: 'error',
+                    customClass: 'bg-red-200'
+                })
+            }                
+        },
+        },
         components: {
             dataTable
         }

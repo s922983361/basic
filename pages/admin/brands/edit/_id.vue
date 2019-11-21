@@ -25,6 +25,7 @@
             return {
                 pageTitle: '品牌資訊',
                 modelName: 'brands',
+                afterSavePushTo: 'brands',
                 FileName: '', //old image url
                 formModels: [                    
                     {                        

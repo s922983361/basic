@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const GoodsType = require('./GoodsType')
 const d = new Date();
 
 const GoodsTypeAttrSchema = new Schema({
@@ -8,11 +9,8 @@ const GoodsTypeAttrSchema = new Schema({
         //required: [true, 'Enter Brand Name is Neccessary'],
     },
     goodsType_id:{
-        type: Schema.Types.ObjectId, ref: 'GoodsType', //與Manager modele關聯
+        type: Schema.Types.ObjectId, ref: 'GoodsType', //與GoodsType modele關聯
         //required: [true, 'Enter manager_id is Neccessary'],
-    },
-    logoUrl: {
-        type: String
     },
     status: {
         type: Number, default : 0

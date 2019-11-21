@@ -25,7 +25,8 @@
         data () {
             return {
                 pageTitle: '商品類型',
-                modelName: 'goodsTypes', 
+                modelName: 'goodsTypes',
+                afterSavePushTo: 'goodsTypes',
                 formModels: [
                     {                        
                         label: '名稱:',

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Role = require('./Role')
 const d = new Date();
 
 const ManagerSchema = new Schema({

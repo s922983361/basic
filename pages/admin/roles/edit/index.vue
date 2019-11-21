@@ -25,7 +25,8 @@
         data () {
             return {
                 pageTitle: '管理員角色',
-                modelName: 'roles', 
+                modelName: 'roles',
+                afterSavePushTo: 'roles',
                 formModels: [
                     {                        
                         label: '名稱:',

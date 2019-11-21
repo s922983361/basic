@@ -20,6 +20,7 @@
             return {
                 pageTitle: '表單範例測試',
                 modelName: 'examples',
+                afterSavePushTo: 'examples',
                 formModels: [                    
                     {                        
                         label: '名稱',

@@ -34,9 +34,9 @@ router.get('/:pageIndex/:pageSize', async (ctx) => {
 
     const queryOptions = {}
     // mogoose populate DATA https://blog.csdn.net/elliott_yoho/article/details/53537147    
-    if(ctx.state.Model.modelName === 'Manager') {
-        queryOptions.populate = 'role'
-    }
+    if(ctx.state.Model.modelName === 'Manager') { queryOptions.populate = 'role_id' }
+    //if(ctx.state.Model.modelName === 'GoodsTypeAttr') { queryOptions.populate = 'goodsType_id' }
+
     try {
         const totalItems = await ctx.state.Model.estimatedDocumentCount()//計算該集合內總數量
         const items = await ctx.state.Model.find().skip(skipNum).setOptions(queryOptions).limit(pageSize)

@@ -1,6 +1,9 @@
 export default {
     methods: {
         async save(editData) {
+            //extend
+            if(!this.$_.isEmpty(this.$route.params.attrs)){ editData.goodsType_id = this.$route.params.attrs }
+
             let res = {}
             try { 
                 //路由是否帶id-=>修改 不帶id=>新增
@@ -17,7 +20,7 @@ export default {
                 //Success 
                 if(res.statusCode === 20200 || res.statusCode === 23200) {                        
                     await this.notifyFunc(res, 'success', 'bg-green-200')
-                    this.$router.push(`/admin/${this.modelName}`)
+                    this.$router.push(`/admin/${this.afterSavePushTo}`)
                 }
             }
             catch(err) { 

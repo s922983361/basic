@@ -24,7 +24,8 @@
         data () {
             return {
                 pageTitle: '管理員資訊',
-                modelName: 'managers', 
+                modelName: 'managers',
+                afterSavePushTo: 'managers',
                 formModels: [
                     {                        
                         label: '管理員名稱:',

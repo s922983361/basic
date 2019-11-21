@@ -25,7 +25,8 @@
         data () {
             return {
                 pageTitle: '模組及權限',
-                modelName: 'accesses', 
+                modelName: 'accesses',
+                afterSavePushTo: 'accesses',
                 formModels: [                    
                     {                        
                         label: '模組名稱:',
