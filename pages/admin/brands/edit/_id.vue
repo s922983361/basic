@@ -61,9 +61,8 @@
         computed: {},        
         methods: {
             async getLogoUrl(logoUrl) {
-                let baseUrl = 'http://localhost:3000'
                 let path = '/uploads/brandLogo/'
-                let str = baseUrl + path
+                let str = process.env.baseUrl + path
                 let fileName = logoUrl.substring(str.length)
                 this.FileName = fileName
             },

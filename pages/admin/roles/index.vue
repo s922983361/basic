@@ -104,7 +104,10 @@
                 },
             };
         },
-        computed: {},
+        computed: {},        
+        created() {
+            this.fetch()
+        },
         methods: {
             //跳轉權限頁面
             async handleAuth (row) {

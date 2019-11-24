@@ -3,7 +3,7 @@ require('dotenv').config()
 module.exports = {
 	mode: 'universal',
 	env: {
-		baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+		baseUrl: process.env.BASE_URL || 'http://localhost:3000',		
 	},
 	
 	router: {
@@ -46,6 +46,7 @@ module.exports = {
 		{ src: '@/plugins/tools.js', ssr: false },
 		{ src: '@/plugins/lodash.js', ssr: false },
 		{ src: '@/plugins/vueHtmlToPaper.js', ssr: false },
+		{ src: '@/plugins/imageCompress.js', ssr: false },
 	],
 	/*
 	** Nuxt.js dev-modules

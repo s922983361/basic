@@ -2,7 +2,7 @@
     <div class="list w-full">
         <header class="text-center border-b-2 border-teal-300 py-4">
             <h1 class="text-2xl font-bold text-black">{{ title }}</h1>
-            <h3 class="text-2xl text-black">{{ $route.params.attrs }}</h3>
+            <h3 class="text-2xl text-black">{{ pageSubTitle }}</h3>
         </header>
         <div class="content p-4">
             <dataTable
@@ -36,6 +36,8 @@
         data () {
             return {
                 title:'商品所屬類型列表',
+                pageSubTitle: '',
+                parentModelName: 'goodsTypes',
                 modelName: 'goodsTypeAttrs',//*注意:英文全小寫複數
                 addPushTo: `goodsTypes/${this.$route.params.attrs}`,
                 statusFilter: false,//是否需要狀態過濾
@@ -68,6 +70,8 @@
         },
         created() {
             this.fetch()
+            //get parent detail in mixins
+            this.$route.params.attrs && this.fetchGoodsTypeDetail(this.parentModelName, this.$route.params.attrs)
         },
         methods: {
         /**

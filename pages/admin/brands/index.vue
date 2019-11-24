@@ -143,10 +143,8 @@
              * @param {*} row scope row data form Datatable component
              */
             async handleDel (row) {
-
-                let baseUrl = 'http://localhost:3000'
                 let path = '/uploads/brandLogo/'
-                let str = baseUrl + path
+                let str = process.env.baseUrl + path
                 let fileName = row.logoUrl.substring(str.length)
 
                 this.$confirm(`是否刪除 "${row.name ? row.name : row.title }"? 如果您的品牌已經建立過商品, 刪除此品牌將會一併刪除相關的所有商品, 確定要刪除?`, '提示', {

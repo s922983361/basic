@@ -35,7 +35,7 @@ module.exports = {
         interval: { min: 15 }, // 15 minutes = 15*60*1000
         delayAfter: 0,//max number of connections during interval before starting to delay responses. Defaults to 1. Set to 0 to disable delaying.
         timeWait: 0,//how long to delay the response, multiplied by (number of recent hits - delayAfter). Defaults to 1000 (1 second). Set to 0 to disable delaying.
-        max: 200, // limit each IP to 100 requests per interval
+        max: 500, // limit each IP to 100 requests per interval
         statusCode: 429,//HTTP status code returned when max is exceeded. Defaults to 429.
         message: 'Too many requests, please try again later !!',
         whitelist: [],//Array of whitelisted IPs to not be rate limited.

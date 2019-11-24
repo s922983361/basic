@@ -11,12 +11,10 @@
         >
         <el-submenu index="1" v-if="$store.state.auth.is_super">
             <template slot="title">
-                <i class="el-icon-eleme" style="color:#e2e8f0"></i>
-                <span>超級管理員</span>
+                <i class="el-icon-finished" style="color:#feb2b2"></i>
+                <span style="color:#feb2b2">管理員功能模塊</span>
             </template>
             <el-menu-item-group>
-                <template slot="title">管理員功能模塊</template> 
-
                 <el-menu-item index="/admin/managers">                
                     <i class="el-icon-tickets"></i>
                     <span slot="title">管理員資訊</span>                                
@@ -32,7 +30,12 @@
                 </el-menu-item>
 
             </el-menu-item-group>
-
+        </el-submenu>
+        <el-submenu index="2" v-if="$store.state.auth.is_super">
+            <template slot="title">
+                <i class="el-icon-finished" style="color:#feb2b2"></i>
+                <span style="color:#feb2b2">廠商功能模塊</span>
+            </template>
             <el-menu-item-group>
                 <template slot="title">主功能模塊</template>
 
@@ -52,7 +55,22 @@
                 </el-menu-item>
             </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="2" v-if="$store.state.auth.is_super || $store.state.auth.role_id === '5db0f7ab7b9fe840f0b1f73b'">
+        <el-submenu index="3" v-if="$store.state.auth.is_super">
+            <template slot="title">
+                <i class="el-icon-finished" style="color:#feb2b2"></i>
+                <span style="color:#feb2b2">經銷商功能模塊</span>
+            </template>
+            <el-menu-item-group>
+                <template slot="title">主功能模塊</template>
+
+                <el-menu-item index="/admin/goodsTypes">                
+                    <i class="el-icon-price-tag"></i>
+                    <span slot="title">商品類型</span>
+                </el-menu-item>
+
+            </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="10" v-if="$store.state.auth.is_super || $store.state.auth.role_id === '5db0f7ab7b9fe840f0b1f73b'">
             <template slot="title">
                 <i class="el-icon-eleme" style="color:#e2e8f0"></i>
                 <span>廠商</span>
@@ -66,7 +84,7 @@
                 </el-menu-item> 
             </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="3" v-if="$store.state.auth.is_super || $store.state.auth.role_id === '5db0f7b77b9fe840f0b1f73c'">
+        <el-submenu index="11" v-if="$store.state.auth.is_super || $store.state.auth.role_id === '5db0f7b77b9fe840f0b1f73c'">
             <template slot="title">
                 <i class="el-icon-eleme" style="color:#e2e8f0"></i>
                 <span>經銷商</span>

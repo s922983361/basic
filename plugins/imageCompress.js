@@ -1,14 +1,20 @@
-
+/**
+ * @desc vue-html-to-paper
+ * npm https://www.npmjs.com/package/vue-html-to-paper
+ * this plugin  use "Vue mixin" and "$htmlToPaper" for paper printing html elements. 
+ */
+import Vue from 'vue';
 import imageCompression from 'browser-image-compression'
 import { Notification } from 'element-ui'
 /**
  * @desc browser image compression
  * https://www.npmjs.com/package/browser-image-compression
- * @param {*} file 
+ * @param {*} file uploadfile
  * @param {*} maxSizeMB the sizeMB of file after cpmpressing (Number/mb)
  * @param {*} maxWidthOrHeight that will be resized maxWidthOrHeight (Number/px) 
  */
-export const imageCompress = async (file , maxSizeMB = 0.1, maxWidthOrHeight = 300) => {
+
+const imageCompress = async (file , maxSizeMB = 0.1, maxWidthOrHeight = 300) => {
     //const imageFile = event.target.files[0];
     const imageFile = file
     // console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
@@ -34,3 +40,4 @@ export const imageCompress = async (file , maxSizeMB = 0.1, maxWidthOrHeight = 3
         })
     }
 }
+Vue.prototype.$imageCompress = imageCompress

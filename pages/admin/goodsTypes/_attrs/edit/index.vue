@@ -85,29 +85,9 @@
             };
         },
         created() {
-            //get parent detail
+            //get parent detail in mixins
             this.$route.params.attrs && this.fetchGoodsTypeDetail(this.parentModelName, this.$route.params.attrs)
-        },
-        methods:{
-            //get parent detail
-            async fetchGoodsTypeDetail(parentModelName, id) {
-                try {
-                    const res = await this.$axios.$get(`admin/rest/${parentModelName}/${id}`)
-                    if(res.statusCode === 22500) {
-                        await this.notifyFunc(res, 'error', 'bg-red-200')
-                        return
-                    }
-                    this.pageSubTitle = res.data.name
-                }               
-                catch(err) {
-                    this.$message({                        
-                        message: '發生不明的錯誤,請聯絡管理員!!',
-                        type: 'error',
-                        customClass: 'bg-red-200'
-                    })
-                }
-            },
-        },
+        },        
         components: {
             commonEdit
         },

@@ -55,7 +55,7 @@
                         :key="item.prop"
                         :rules="item.rules"
                         >
-                        <el-input :type="item.type" v-model="model[item.prop]" :placeholder="item.placeholder"></el-input>
+                        <el-input :type="item.type" v-model="model[item.prop]" :placeholder="item.placeholder" :disabled="showTextArea"></el-input>
 
                         </el-form-item>
                     <el-form-item
@@ -117,7 +117,6 @@
 <script>
     import viewPage from '@/components/admin/form/viewPage'
     import notify from '@/plugins/mixins/notify'
-    import { imageCompress } from '@/plugins/util/imageCompress'
     import { showLoading, hideLoading } from '@/plugins/util/loading'
 
     export default {
@@ -132,11 +131,24 @@
             };
         },
         computed: { 
-            getHeader() {
-                return {                    
-                    'Authorization': this.$store.state.auth.token
-                }
+            getHeader() {  
+                const uploadData = this.formModels.filter((item) => {
+                    return item.type === 'file'
+                })
+                if(uploadData.length > 0) { return { 'Authorization': this.$store.state.auth.token }}
+                //default value
+                return false
             },
+            showTextArea() {
+                // extend 
+                //type == textarea && exist prop "attr_type"
+                if(!this.$_.isEmpty(this.model.attr_type)){
+                    if(this.model.attr_type == '3') { return false }
+                    if(this.model.attr_type == '1' || this.model.attr_type == '2') { return  true } 
+                }
+                //default value
+                return false
+            }
         },
         mounted() {
             //_id.vue : To fetch Data first if ID is exsist after mounted 
@@ -216,7 +228,8 @@
                 * @param {*} maxSizeMB the sizeMB of file after cpmpressing (Number/mb default:0.1)
                 * @param {*} maxWidthOrHeight that will be resized maxWidthOrHeight (Number/px default:300) 
                  */
-                return file = imageCompress(file)               
+                
+                return file = this.$imageCompress(file)
             },
             handleFileSuccess(res) {
                 /**

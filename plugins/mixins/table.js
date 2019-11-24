@@ -33,9 +33,6 @@ export default {
                 pageSize: 20 /**每頁最多數據量 default:20 */ 
             },
         }
-    },    
-    created() {
-        this.fetch()
     },
     methods: {
         /**
@@ -67,7 +64,7 @@ export default {
          * @param {*} row scope row data form Datatable component
          */        
         async handleEdit (row) {
-            this.$router.push(`/admin/${this.modelName}/edit/${row._id}`)
+            this.$router.push(`/admin/${this.addPushTo}/edit/${row._id}`)
         },
         /**
          * @desc use $axios to delete data of this row form database
@@ -115,6 +112,24 @@ export default {
         async handleIndexChange (pagination) {
             this.pagination = pagination
             this.fetch(this.pagination.pageIndex, this.pagination.pageSize)
+        },
+        //get parent detail
+        async fetchGoodsTypeDetail(parentModelName, id) {
+            try {
+                const res = await this.$axios.$get(`admin/rest/${parentModelName}/${id}`)
+                if(res.statusCode === 22500) {
+                    await this.notifyFunc(res, 'error', 'bg-red-200')
+                    return
+                }
+                this.pageSubTitle = res.data.name
+            }               
+            catch(err) {
+                this.$message({                        
+                    message: '發生不明的錯誤,請聯絡管理員!!',
+                    type: 'error',
+                    customClass: 'bg-red-200'
+                })
+            }
         },
     },
     components: {        

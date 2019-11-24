@@ -83,6 +83,9 @@
                     },
                 ],
             };
+        },        
+        created() {
+            this.fetch()
         },
         components: {
             dataTable,            
