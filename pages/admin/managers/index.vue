@@ -69,8 +69,8 @@
                         render: (h, params) => {
                             return h('el-tag', {
                                 props: {
-                                    type: params.row.role_id === '5db0f7587b9fe840f0b1f73a' ? 'danger' : params.row.role_id === '5db0f7ab7b9fe840f0b1f73b' ? 'succcess' : params.row.role_id === '5db0f7b77b9fe840f0b1f73c' ? 'info' : 'danger'} // 组件的props(使用狀態碼控制顏色)
-                            }, params.row.role_id === '5db0f7587b9fe840f0b1f73a' ? 'super' : params.row.role_id === '5db0f7ab7b9fe840f0b1f73b' ? '廠商' : params.row.role_id === '5db0f7b77b9fe840f0b1f73c' ? '經銷商' :'未知')//组件的props(使用狀態碼控制內容)
+                                    type: params.row.role_id._id === '5db0f7587b9fe840f0b1f73a' ? 'danger' : params.row.role_id === '5db0f7ab7b9fe840f0b1f73b' ? 'succcess' : params.row.role_id === '5db0f7b77b9fe840f0b1f73c' ? 'info' : 'danger'} // 组件的props(使用狀態碼控制顏色)
+                            }, params.row.role_id._id === '5db0f7587b9fe840f0b1f73a' ? 'super' : params.row.role_id === '5db0f7ab7b9fe840f0b1f73b' ? '廠商' : params.row.role_id === '5db0f7b77b9fe840f0b1f73c' ? '經銷商' :'未知')//组件的props(使用狀態碼控制內容)
                         }
                     },    
                 ], 

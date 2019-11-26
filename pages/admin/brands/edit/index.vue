@@ -23,11 +23,13 @@
         data () {
             return {
                 pageTitle: '品牌資訊',
-                modelName: 'brands', 
-                formModels: [                    
+                modelName: 'brands',
+                afterSavePushTo: 'brands',
+                uploadImage: true, 
+                formModels: [
                     {                        
                         label: '上傳LOGO:',
-                        prop: 'logoUrl',
+                        prop: 'imageUrl',
                         type: 'file',
                         action: '/api/admin/upload', //sever API
                         listType: 'picture', //['text', 'picture', 'picture-card']
@@ -59,7 +61,7 @@
         methods: {
             async save(editData) {
                 //logoUrl is needed
-                if(this.$_.isEmpty(editData.logoUrl)){
+                if(this.$_.isEmpty(editData.imageUrl)){
                     this.$notify({
                         message: '品牌Logo 尚未上傳',
                         type: 'error',
@@ -80,7 +82,7 @@
                     //Success 
                     if(res.statusCode === 13200) {                        
                         await this.notifyFunc(res, 'success', 'bg-green-200')
-                        this.$router.push(`/admin/${this.modelName}`)
+                        this.$router.push(`/admin/${this.afterSavePushTo}`)
                     }
                 }
                 catch(err) { 

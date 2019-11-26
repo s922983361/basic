@@ -8,7 +8,7 @@
                 :modelName=modelName
                 :formModels=formModels
                 @editData="save"
-                @getLogoUrl="getLogoUrl"
+                @getImageFileName="getImageFileName"
             ></commonEdit>
         </div>
     </div>
@@ -26,11 +26,13 @@
                 pageTitle: '品牌資訊',
                 modelName: 'brands',
                 afterSavePushTo: 'brands',
+                uploadImage: true,
+                uploadDir: '',
                 FileName: '', //old image url
                 formModels: [                    
                     {                        
                         label: '上傳LOGO:',
-                        prop: 'logoUrl',
+                        prop: 'imageUrl',
                         type: 'file',
                         action: '/api/admin/upload', //sever API
                         listType: 'picture', //['text', 'picture', 'picture-card']
@@ -60,10 +62,11 @@
         },
         computed: {},        
         methods: {
-            async getLogoUrl(logoUrl) {
+            //get image fileName from children component(commomEdit.vue)
+            async getImageFileName(imageUrl) {
                 let path = '/uploads/brandLogo/'
                 let str = process.env.baseUrl + path
-                let fileName = logoUrl.substring(str.length)
+                let fileName = imageUrl.substring(str.length)
                 this.FileName = fileName
             },
             async save(editData) { 
@@ -79,7 +82,7 @@
                     //Success 
                     if(res.statusCode === 16200) {                        
                         await this.notifyFunc(res, 'success', 'bg-green-200')
-                        this.$router.push(`/admin/${this.modelName}`)
+                        this.$router.push(`/admin/${this.afterSavePushTo}`)
                     }
                 }
                 catch(err) { 

@@ -98,6 +98,43 @@ export default {
             .catch(err =>{})
         },
         /**
+         * @desc use $axios to delete data and image of this row form database
+         * Function is binded 'operates.list.methods' on table component
+         * @param {*} row scope row data form Datatable component
+         */
+        async handleDelAndDeleteImage (row) {
+
+            let path = '/uploads/' + this.uploadDir + '/'
+            let str = process.env.baseUrl + path
+            let fileName = row.imageUrl.substring(str.length)
+            this.FileName = fileName
+
+            this.$confirm(`是否刪除 "${row.name ? row.name : row.title }"?`, '提示', {
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            })
+            .then( async () => {
+                try {
+                    const res = await this.$axios.$delete(`/admin/rest/${this.modelName}/${row._id}/${this.uploadDir}/${this.FileName}`)
+                    //Server ERROR 
+                    res.statusCode === 24500 && await this.notifyFunc(res, 'error', 'bg-red-200')
+                    //Success
+                    await this.notifyFunc(res, 'success', 'bg-green-200')
+                    this.fetch()
+                }
+                catch(err) {                         
+                     //Browser ERROR                   
+                    this.$message({                        
+                        message: '瀏覽器不明錯誤,請重新操作!!',
+                        type: 'error',
+                        customClass: 'bg-red-200'
+                    })
+                }                    
+            })                
+            .catch(err =>{})
+        },
+        /**
          * @desc toggle the count of every page
          * @param {*} pagination number , it is binded table component ,it is setted up by component
          */

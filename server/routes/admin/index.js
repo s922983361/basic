@@ -1,8 +1,10 @@
 /**
  * @desc CRUD通用接口
  */
+const fs = require('fs')
 const Router = require('koa-router')
 const router = new Router()
+const tools = require('../../utils/tools')
 const { _CODE, CTXBODY } = require('../../statusCode')
 
 router.post('/', async (ctx) => {
@@ -77,10 +79,12 @@ router.put('/:id', async (ctx) => {
     /**
      * @desc Update One data API
      * @ access private*/    
-    try {
+    try {       
+        //update data
         const d = new Date()
         ctx.request.body.update_date = d.getTime()
         await ctx.state.Model.findByIdAndUpdate(ctx.params.id, ctx.request.body, { runValidators: true })
+
         const CODE = _CODE.COMMOM_CRUD_UPDATE_SUCCESS
         ctx.body = CTXBODY(CODE)
     }
@@ -97,6 +101,69 @@ router.delete('/:id', async (ctx) => {
      * @ access private*/ 
     try {
         await ctx.state.Model.findByIdAndDelete(ctx.params.id)
+        const CODE = _CODE.COMMOM_CRUD_DELETE_SUCCESS
+        ctx.body = CTXBODY(CODE)
+    }
+    catch(err) {
+        const CODE = _CODE.COMMOM_CRUD_DELETE_ERROR
+        ctx.body = CTXBODY(CODE)
+        ctx.app.emit('error', err, ctx);
+    }
+})
+
+router.put('/:id/:uploadDir/:fileName', async (ctx) => {
+    /**
+     * @desc Update One data & delete old image API
+     * @ access private*/    
+    const UploadDir = ctx.params.uploadDir
+    const FileName = ctx.params.fileName
+    
+    try { 
+        //fetch old image before update
+        const { imageUrl } = await ctx.state.Model.findById(ctx.params.id)        
+        const destPath = `${__dirname}/../../../static/uploads/${UploadDir}/${FileName}`
+        //update data
+        const d = new Date()
+        ctx.request.body.update_date = d.getTime()
+        await ctx.state.Model.findByIdAndUpdate(ctx.params.id, ctx.request.body, { runValidators: true })
+        
+        //does exist data of upload image        
+        if(imageUrl !== ctx.request.body.imageUrl){
+            //destPath should existe
+            tools.isEmpty(destPath) && ctx.throw(400, 'Delete Image Without-- OldFileName')
+            //async delete brandLogo Image
+            fs.unlink(destPath, (err) => {
+                if (err) throw err
+            })
+        }
+        
+        const CODE = _CODE.COMMOM_CRUD_UPDATE_SUCCESS
+        ctx.body = CTXBODY(CODE)
+    }
+    catch(err) {
+        const CODE = _CODE.COMMOM_CRUD_UPDATE_ERROR
+        ctx.body = CTXBODY(CODE)
+        ctx.app.emit('error', err, ctx);
+    }
+})
+
+router.delete('/:id/:uploadDir/:fileName', async (ctx) => {
+    /**
+     * @desc Delete One data API
+     * @ access private*/
+    const UploadDir = ctx.params.uploadDir
+    const FileName = ctx.params.fileName
+    const destPath = `${__dirname}/../../../static/uploads/${UploadDir}/${FileName}`
+
+    try {
+        await ctx.state.Model.findByIdAndDelete(ctx.params.id)
+        //destPath should existe
+        tools.isEmpty(destPath) && ctx.throw(400, 'Delete Image Without-- OldFileName')
+        //async delete brandLogo Image
+        fs.unlink(destPath, (err) => {
+            if (err) throw err
+        })
+
         const CODE = _CODE.COMMOM_CRUD_DELETE_SUCCESS
         ctx.body = CTXBODY(CODE)
     }

@@ -19,12 +19,12 @@ router.post('/', async (ctx) => {
      * 4.set field "brand_id" in manager schema 
      * 5.update manager data connection
      */
-    const { manager_id, logoUrl } = ctx.request.body 
+    const { manager_id, imageUrl } = ctx.request.body 
     ctx.request.body.name = xss(ctx.request.body.name)
     //1.necessary {ctx.request.body.name, manager_id, logoUrl}
     tools.isEmpty(ctx.request.body.name) && ctx.throw(400, 'Add Brand Without-- Brand Name')
     tools.isEmpty(manager_id) && ctx.throw(400, 'Add Brand Without-- manager_id')
-    tools.isEmpty(logoUrl) && ctx.throw(400, 'Add Brand Without-- logoUrl')
+    tools.isEmpty(imageUrl) && ctx.throw(400, 'Add Brand Without-- imageUrl')
 
     try {
         //2.has this brand be used ?
@@ -37,7 +37,7 @@ router.post('/', async (ctx) => {
             const model = await Brand.create({
                 name: ctx.request.body.name,
                 manager_id,
-                logoUrl
+                imageUrl
             })
             //4.set field "brand_id" in manager schema
             const brand_id =[]
@@ -125,14 +125,14 @@ router.put('/:id/:fileName', async (ctx) => {
             return
         }
         //5.fetch old image before update new brand
-        const { logoUrl } = await Brand.findById(ctx.params.id)
+        const { imageUrl } = await Brand.findById(ctx.params.id)
         //6.upadte new brand
         const d = new Date()
         ctx.request.body.update_date = d.getTime()                
         await Brand.findByIdAndUpdate(ctx.params.id, ctx.request.body, { runValidators: true })
 
         //7.Delete old image of this Brand if upadte new brand Successfully  
-        if(logoUrl !== ctx.request.body.logoUrl){
+        if(imageUrl !== ctx.request.body.imageUrl){
             const FileName = ctx.params.fileName
             const destPath = `${__dirname}/../../../static/uploads/brandLogo/${FileName}`
             //destPath should existe

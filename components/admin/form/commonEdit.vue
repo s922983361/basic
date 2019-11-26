@@ -127,7 +127,9 @@
         mixins: [ notify ],
         data () {
             return {
-                model: {},              
+                model: {
+                    imageUrl: '',
+                },              
             };
         },
         computed: { 
@@ -157,7 +159,7 @@
                 .then(data =>{
                     this.model = data
                     //pass Data to parent component
-                    !this.$_.isEmpty(this.model.logoUrl) && this.$emit('getLogoUrl', this.model.logoUrl)                    
+                    !this.$_.isEmpty(this.model.imageUrl) && this.$emit('getImageFileName', this.model.imageUrl)                    
                 })
                 .catch( err =>{
                     this.$message.error('500 服務器錯誤!, 數據導入失敗!');
@@ -243,8 +245,9 @@
                     //Success 
                     if(res.statusCode === 90200) {                        
                         this.notifyFunc(res, 'success', 'bg-green-200')
-                         //vue $set
-                        this.$set(this.model, 'logoUrl', res.file.url)
+                        //vue $set
+                        //this.$set(this.model, 'imageUrl', res.file.url)
+                        this.model['imageUrl'] = res.file.url
                         return 
                     }
                 }              

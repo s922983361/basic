@@ -12,9 +12,8 @@ router.get('/', async (ctx) => {
      * return Array
      */
     let queryOptions = {}
-    if(ctx.state.Model.modelName === 'Access'){
-        queryOptions.module_id = "0"
-    }
+    if(ctx.state.Model.modelName === 'Access'){ queryOptions.module_id = "0" }
+    if(ctx.state.Model.modelName === 'GoodsCate'){ queryOptions.pid = "0" }
 
     try {
         let selectList = await ctx.state.Model.find(queryOptions)        

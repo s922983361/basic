@@ -11,7 +11,7 @@ const BrandSchema = new Schema({
         type: Schema.Types.ObjectId, ref: 'Manager', //與Manager modele關聯
         //required: [true, 'Enter manager_id is Neccessary'],
     },
-    logoUrl: {
+    imageUrl: {
         type: String
     },
     status: {
