@@ -16,7 +16,7 @@
     "@nuxtjs/axios": "^5.6.0",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "browser-image-compression": "^1.0.6",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
