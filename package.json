@@ -43,7 +43,7 @@
     "passport-jwt": "^4.0.0",
     "svg-captcha": "^1.4.0",
     "vue-html-to-paper": "^1.1.1",
-    "xlsx": "^0.15.1",
+    "xlsx": "^0.17.0",
     "xss": "^1.0.6"
   },
   "devDependencies": {
