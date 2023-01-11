@@ -25,7 +25,7 @@
     "gravatar": "^1.8.0",
     "inflection": "^1.12.0",
     "js-cookie": "^2.2.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-helmet": "^5.2.0",
